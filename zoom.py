@@ -37,6 +37,7 @@ def udostepnij_ekran_z_dziwekiem(): # działa
         else:
             print("błąd")
 
+
         # ekran udostępniony
         udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran')
         udostepnij_ekran_przycisk.click_input()
