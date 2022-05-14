@@ -4,6 +4,7 @@ import time
 def connect():
   ipsoktania = input("Podaj id sptokania (bez spacji): ")
 
+
   # Jeśli okno zoom jest włączone to proces z automatycznym łączeniem jest pomijany
   if ipsoktania != '':
       #==============================Automatyczne Połączenie z Zoomem===============================================================================
