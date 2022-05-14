@@ -6,7 +6,6 @@ import zoom_connect
 # cały kod jest w zoom_connect.py. Tam jest funkcja łącząca do spotkania
 zoom_connect.connect()
 
-
 # Automatyzacja funkcjonowania
 Spotkanie = Application(backend='uia').connect(title='Zoom Spotkanie', timeout=10)
 Spotkanie.Zoomspotkanie.click_input()
@@ -43,7 +42,6 @@ def udostepnij_ekran_z_dziwekiem(): # działa
         udostepnij_ekran_przycisk.click_input()
     except ValueError: 
         print("error: " + ValueError)
-
 
 
 def udostepnij_ekran_bez_dzwieku():
