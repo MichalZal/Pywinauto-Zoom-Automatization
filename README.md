@@ -6,4 +6,6 @@ Pywinauto
 pyautogui
 time
 
+### 16may. Added the function to work in background on windows. 
+
 ### It's not very optimised code but with time I will update it. 
