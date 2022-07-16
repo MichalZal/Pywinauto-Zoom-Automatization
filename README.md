@@ -2,10 +2,12 @@
 Its a python program, which speeds up the process of joining to meeting and sharing the screen. 
 
 ### required packages: 
-Pywinauto
-pyautogui
-time
-pynput
+Pywinauto,
+pyautogui,
+time,
+pynput,
+pyserial,
+serial
 
 # 16th May. 
 ### Trying to Add the function to work in background on windows. 
