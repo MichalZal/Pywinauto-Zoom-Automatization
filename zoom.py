@@ -1,10 +1,10 @@
 from pywinauto import Application
 import time
 from pynput import keyboard
-import zoom_connect
+import serial
 
+# import zoom_connect
 # cały kod jest w zoom_connect.py. Tam jest funkcja łącząca do spotkania
-
 
 # Automatyzacja funkcjonowania
 Spotkanie = Application(backend='uia').connect(title='Zoom Spotkanie')
@@ -42,12 +42,12 @@ def udostepnij_ekran_z_dziwekiem(): # działa
       z_wideoklipem.toggle()
 
     # ekran udostępniony
-    udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran')
+    # udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.print_control_identifiers()
+
+    udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran 1')
     udostepnij_ekran_przycisk.click_input()
   except ValueError: 
     print("error: " + ValueError)
-
-
 
 def udostepnij_ekran_bez_dzwieku():
   try:
@@ -75,11 +75,10 @@ def udostepnij_ekran_bez_dzwieku():
       z_wideoklipem.toggle()
 
     # ekran udostępniony
-    udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran')
+    udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran 1')
     udostepnij_ekran_przycisk.click_input()
   except ValueError: 
     print("error: " + ValueError)
-
 
 def udostepnij_ekran_jako_wideoklip():
   try:
@@ -107,7 +106,7 @@ def udostepnij_ekran_jako_wideoklip():
       z_wideoklipem.toggle()
 
     # ekran udostępniony
-    udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran')
+    udostepnij_ekran_przycisk = udostepnij_ekran_okno.Wybierzoknolubaplikacjęktórąchceszudostępnić.child_window(title='Udostępnij Ekran 1')
     udostepnij_ekran_przycisk.click_input()
   except ValueError: 
     print("error: " + ValueError)
@@ -118,58 +117,130 @@ def zatrzymaj_udostepnianie():
 
   zatrzymaj_udostepnianie_przycisk = sterowniki_spotkania.Sterownikispotkania.child_window(title="Zatrzymaj udostępnianie (Alt+S)", control_type="Button")
   zatrzymaj_udostepnianie_przycisk.click_input()
+
+def mikrofon():
+  print('mikrofon')
+  # Spotkanie = Application(backend='uia').connect(title='Zoom Spotkanie', timeout=10)
+  # Spotkanie.Zoomspotkanie.click_input()
+
+  # mikrofon_wlacz = "Wyłącz wyciszenie, tymczasowo wyciszono, Alt+A"
+  # mikrofon_wylacz = "Wycisz, tymczasowo wyłączono wyciszenie, Alt+A"
+
+  # mikrofon_ikonka = Spotkanie.Zoomspotkanie.child_window(title="Wyłącz wyciszenie, tymczasowo wyciszono, Alt+A", control_type="Button")
+  # mikrofon_ikonka.click_input()
+
+
+def kamera():
+  print("kamera")
+  # Spotkanie = Application(backend='uia').connect(title='Zoom Spotkanie', timeout=10)
+  # Spotkanie.Zoomspotkanie.click_input()
+
+  # kamerka_ikonka_wlacz = Spotkanie.ZoomSpotkanie.child_window(title="rozpocznij moje wideo, Alt+V", control_type="Button")
+  # kamerka_ikonka_wylacz = Spotkanie.ZoomSpotkanie.child_window(title="zatrzymaj moje wideo , Alt+V", control_type="Button")
+
+  # if kamerka_ikonka_wylacz in locals():
+  #   kamerka_ikonka_wylacz.click_input()
+
+  # if kamerka_ikonka_wlacz in locals():
+  #   kamerka_ikonka_wlacz.click_input()
+
+  
 # ==================koniec funkcji zoomowych====================
 
+port = int(input('Podaj port byku: '))
 
+ser = serial.Serial(
+    port=f'COM{port}',\
+    baudrate=74880,\
+    parity=serial.PARITY_NONE,\
+    stopbits=serial.STOPBITS_ONE,\
+    bytesize=serial.EIGHTBITS,\
+        timeout=0.5)
 
-# while True:
-#   dzialanie = input(
-#       "Co chcesz zrobic?: \n"
-#       "1. Udostepnij ekran z dziwekiem \n"
-#       "2. Udostepnij ekran bez dzwieku \n"
-#       "3. Udostepnij pod kątem wideoklipu \n"
-#       "4. Zatrzymaj udostępnianie ekranu \n"
-#       "5. Wyłącz program \n"
-#       "\nWybieraj: "
-#     )
+print("connected to: " + ser.portstr)
 
+buttonState1 = 0
+lastbuttonState_1 = 0
 
-def on_press(key):
-  try:
-    wybor = format(key.char)
-    print('wybor: ' + wybor)
+buttonState2 = 0
+lastbuttonState_2 = 0
 
-    if wybor == '1':
-      udostepnij_ekran_z_dziwekiem()
-    elif wybor == '2':
-      udostepnij_ekran_bez_dzwieku()
-    elif wybor == '3':
+buttonState3 = 0
+lastbuttonState_3 = 0
+
+buttonState4 = 0
+lastbuttonState_4 = 0
+
+buttonState5 = 0
+lastbuttonState_5 = 0
+
+buttonState6 = 0
+lastbuttonState_6 = 0
+
+buttonState7 = 0
+lastbuttonState_7 = 0
+
+buttonState8 = 0
+lastbuttonState_8 = 0
+
+while True:
+  line = str(ser.readline())
+  # print(line)
+
+  if line.find('S11') != -1:
+    buttonState1 = 1
+    if buttonState1 != lastbuttonState_1:
       udostepnij_ekran_jako_wideoklip()
-    elif wybor == '4':
+  lastbuttonState_1 = buttonState1
+  buttonState1 = 0
+
+  if line.find('S2:1') != -1:
+    buttonState2 = 1
+    if buttonState2 != lastbuttonState_2:
+      udostepnij_ekran_bez_dzwieku()
+  lastbuttonState_2 = buttonState2
+  buttonState2 = 0
+
+  if line.find('S3:1') != -1:
+    buttonState3 = 1
+    if buttonState3 != lastbuttonState_3:
+      mikrofon()
+  lastbuttonState_3 = buttonState3
+  buttonState3 = 0
+
+  if line.find('S4:1') != -1:
+    buttonState4 = 1
+    if buttonState4 != lastbuttonState_4:
+      kamera()
+  lastbuttonState_4 = buttonState4
+  buttonState4 = 0
+
+  if line.find('S5:1') != -1:
+    buttonState5 = 1
+    if buttonState5 != lastbuttonState_5:
       zatrzymaj_udostepnianie()
-    elif wybor == '5':
-      exit
-  except ValueError1:
-    print('błąd')
+  lastbuttonState_5 = buttonState5
+  buttonState5 = 0
 
+  if line.find('S6:1') != -1:
+    buttonState6 = 1
+    if buttonState6 != lastbuttonState_6:
+      udostepnij_ekran_jako_wideoklip()
+  lastbuttonState_6 = buttonState1
+  buttonState6 = 0
 
+  if line.find('S7:1') != -1:
+    buttonState7 = 1
+    if buttonState7 != lastbuttonState_7:
+      udostepnij_ekran_jako_wideoklip()
+  lastbuttonState_7 = buttonState7
+  buttonState7 = 0
 
-def on_release(key):
-    # print('{0} released'.format(
-    #     key))
-    if key == keyboard.Key.esc:
-        # Stop listener
-        return False
+  if line.find('S8:1') != -1:
+    buttonState8 = 1
+    if buttonState8 != lastbuttonState_8:
+      udostepnij_ekran_jako_wideoklip()
+  lastbuttonState_8 = buttonState8
+  buttonState8 = 0
 
-# Collect events until released
-with keyboard.Listener(
-        on_press=on_press,
-        on_release=on_release) as listener:
-    listener.join()
-
-# ...or, in a non-blocking fashion:
-listener = keyboard.Listener(
-    on_press=on_press,
-    on_release=on_release)
-    
-listener.start()
+ser.close() 
